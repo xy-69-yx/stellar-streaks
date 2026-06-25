@@ -4,11 +4,9 @@ Stellar Streaks is a Stellar savings challenge starter: a gamified XLM commitmen
 
 ## Submission Checklist
 
-- Live demo link: [link]
+- Live demo link: https://stellar-streaks.vercel.app/
 - Demo video link: [link]
-- Test output screenshot (3+ passing tests): [placeholder]
-- Public GitHub repo link: [link]
-- Meaningful commits: [placeholder]
+
 
 ## Project Overview
 
@@ -34,21 +32,25 @@ This project demonstrates:
   <tr>
     <td align="center" width="50%">
       <strong>🏠 Dashboard</strong><br/><br/>
-      <em>[screenshot placeholder]</em>
+      <em><img width="1876" height="1005" alt="screenshot_visible_2026-06-25_23-53-27" src="https://github.com/user-attachments/assets/76a0cb36-c667-4cce-b387-7f9bdb30e6ec" />
+</em>
     </td>
     <td align="center" width="50%">
       <strong>🔌 Wallet Panel</strong><br/><br/>
-      <em>[screenshot placeholder]</em>
+      <em><img width="1876" height="1005" alt="screenshot_visible_2026-06-25_23-54-00" src="https://github.com/user-attachments/assets/da5d8bf5-d599-4ca8-8159-a647311b1e1c" />
+</em>
     </td>
   </tr>
   <tr>
     <td align="center" width="50%">
       <strong>🪙 Ledger</strong><br/><br/>
-      <em>[screenshot placeholder]</em>
+      <em><img width="1876" height="1005" alt="screenshot_visible_2026-06-25_23-58-57" src="https://github.com/user-attachments/assets/d8e35337-f1cc-47e0-b2d3-73aaac76b986" />
+</em>
     </td>
     <td align="center" width="50%">
       <strong>✅ Test Output</strong><br/><br/>
-      <em>[screenshot placeholder]</em>
+      <em><img width="1876" height="1005" alt="screenshot_visible_2026-06-25_23-57-41" src="https://github.com/user-attachments/assets/ba6ecee3-6ceb-40ce-bd84-5ae32c62d150" />
+</em>
     </td>
   </tr>
 </table>
