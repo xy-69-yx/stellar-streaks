@@ -5,7 +5,7 @@ Stellar Streaks is a Stellar savings challenge starter: a gamified XLM commitmen
 ## Submission Checklist
 
 - Live demo link: https://stellar-streaks.vercel.app/
-- Demo video link: [link]
+- Demo video link: https://drive.google.com/file/d/1k-VReRp8_0MpZOuj1YnVOsb6-WZ8ZFEb/view?usp=sharing
 
 
 ## Project Overview
