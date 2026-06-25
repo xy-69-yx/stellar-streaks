@@ -85,7 +85,7 @@ Run from the repo root:
 
    ```bash
    cd contracts/savings
-   cargo build --release --target wasm32-unknown-unknown
+   cargo build --release --target wasm32v1-none
    ```
 
 4. Deploy the contract to Stellar Testnet
