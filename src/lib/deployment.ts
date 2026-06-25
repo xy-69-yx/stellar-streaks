@@ -1,0 +1,13 @@
+export const deployment = {
+  network: "Stellar Testnet",
+  contractId: "CCNR43J7GIYASMXZALQAWJHI66WPLG7BFRGCGDJR44DACNFVQGT2MTIZ",
+  wasmHash: "40867084ea1cd14486cb9d03e1a87555423996bea87c7bbe8023a9f99300bd61",
+  uploadTxHash: "d7970f55d65098e5dfd5e718f6253f2a89121439b45584388d06e9f445104bd7",
+  deployTxHash: "34fdeb7aeb0aaa13bd7ba94b32823d2ceb12e50a3ce8c23c6b3612edc83c5224",
+  initTxHash: "1ad92050aa7c7672213e1080fe2c633a31fad435abd3287f230f52eede19a744",
+  sourceAccount: "alice",
+  stellarLabUrl:
+    "https://lab.stellar.org/r/testnet/contract/CCNR43J7GIYASMXZALQAWJHI66WPLG7BFRGCGDJR44DACNFVQGT2MTIZ",
+  stellarExpertUrl:
+    "https://stellar.expert/explorer/testnet/tx/34fdeb7aeb0aaa13bd7ba94b32823d2ceb12e50a3ce8c23c6b3612edc83c5224",
+};
