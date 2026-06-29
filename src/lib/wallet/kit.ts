@@ -32,11 +32,12 @@ export function resolveKitNetwork(): Networks {
   }
 }
 
-export function initWalletKit(): void {
+export function initWalletKit(selectedWalletId?: string | null): void {
   if (initialized) return;
 
   StellarWalletsKit.init({
     modules: defaultModules(),
+    selectedWalletId: selectedWalletId ?? undefined,
     network: resolveKitNetwork(),
     authModal: {
       hideUnsupportedWallets: false,

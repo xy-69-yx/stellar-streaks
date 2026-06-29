@@ -30,6 +30,8 @@ const initialWalletState: WalletState = {
 
 type WalletListener = () => void;
 
+const selectedWalletStorageKey = "stellar-streaks:selected-wallet-id";
+
 let sharedWalletState: WalletState = initialWalletState;
 let sharedNativeBalance: string | null = null;
 let kitReady = false;
@@ -52,6 +54,46 @@ function setNativeBalance(balance: string | null) {
   emitWalletState();
 }
 
+function readStoredWalletId(): string | null {
+  if (typeof window === "undefined") return null;
+
+  try {
+    return window.localStorage.getItem(selectedWalletStorageKey);
+  } catch {
+    return null;
+  }
+}
+
+function storeWalletId(walletId: string | null): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    if (walletId) {
+      window.localStorage.setItem(selectedWalletStorageKey, walletId);
+    } else {
+      window.localStorage.removeItem(selectedWalletStorageKey);
+    }
+  } catch {
+    // Ignore storage failures. Wallet can still work in-session.
+  }
+}
+
+async function resolveWalletAddress(
+  fallback?: string | null,
+): Promise<string | null> {
+  try {
+    const { address } = await StellarWalletsKit.getAddress();
+    return address ?? fallback ?? null;
+  } catch {
+    try {
+      const { address } = await StellarWalletsKit.fetchAddress();
+      return address ?? fallback ?? null;
+    } catch {
+      return fallback ?? null;
+    }
+  }
+}
+
 function subscribeWallet(listener: WalletListener): () => void {
   walletListeners.add(listener);
   return () => {
@@ -62,7 +104,11 @@ function subscribeWallet(listener: WalletListener): () => void {
 async function ensureKitRuntime(): Promise<void> {
   if (kitReady) return;
 
-  initWalletKit();
+  const selectedWalletId = readStoredWalletId();
+  initWalletKit(selectedWalletId);
+  if (selectedWalletId) {
+    StellarWalletsKit.setWallet(selectedWalletId);
+  }
   setKitHandle({
     signTransaction: (xdr, opts) =>
       StellarWalletsKit.signTransaction(xdr, {
@@ -75,7 +121,9 @@ async function ensureKitRuntime(): Promise<void> {
     kitListenersBound = true;
 
     StellarWalletsKit.on(KitEventType.WALLET_SELECTED, (event) => {
-      patchWalletState({ walletId: event.payload.id ?? null });
+      const walletId = event.payload.id ?? null;
+      storeWalletId(walletId);
+      patchWalletState({ walletId });
     });
 
     StellarWalletsKit.on(KitEventType.STATE_UPDATED, (event) => {
@@ -90,14 +138,24 @@ async function ensureKitRuntime(): Promise<void> {
         ready: true,
       });
     });
+
+    StellarWalletsKit.on(KitEventType.DISCONNECT, () => {
+      storeWalletId(null);
+      setKitHandle(null);
+      kitReady = false;
+      patchWalletState({
+        publicKey: null,
+        walletId: null,
+        walletNetwork: null,
+        networkMatches: true,
+        ready: true,
+      });
+      setNativeBalance(null);
+    });
   }
 
-  try {
-    const { address } = await StellarWalletsKit.getAddress();
-    patchWalletState({ publicKey: address, ready: true });
-  } catch {
-    patchWalletState({ publicKey: null, ready: true });
-  }
+  const address = await resolveWalletAddress();
+  patchWalletState({ publicKey: address, ready: true });
 
   kitReady = true;
 }
@@ -151,8 +209,9 @@ export function useWallet() {
 
   const connect = useCallback(async () => {
     await ensureKitRuntime();
-    const { address } = await StellarWalletsKit.authModal();
-    patchWalletState({ publicKey: address ?? null, ready: true });
+    const { address: modalAddress } = await StellarWalletsKit.authModal();
+    const address = await resolveWalletAddress(modalAddress ?? null);
+    patchWalletState({ publicKey: address, ready: true });
     await refreshBalance();
     return address;
   }, [refreshBalance]);
@@ -160,6 +219,8 @@ export function useWallet() {
   const disconnect = useCallback(async () => {
     await ensureKitRuntime();
     await StellarWalletsKit.disconnect();
+    storeWalletId(null);
+    setKitHandle(null);
     patchWalletState({
       publicKey: null,
       walletId: null,
