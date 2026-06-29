@@ -231,6 +231,29 @@ export function SavingsDashboard() {
           <a href="#summary">Summary</a>
           <a href="#actions">Actions</a>
         </nav>
+        <div className="topbar__actions">
+          <div className="topbar__wallet-meta">
+            <span>Wallet</span>
+            <strong>{formatAddress(wallet.publicKey)}</strong>
+          </div>
+          {wallet.publicKey ? (
+            <button
+              className="secondary-button topbar__wallet-button"
+              onClick={handleDisconnect}
+              type="button"
+            >
+              Disconnect
+            </button>
+          ) : (
+            <button
+              className="primary-button topbar__wallet-button"
+              onClick={handleConnect}
+              type="button"
+            >
+              Connect wallet
+            </button>
+          )}
+        </div>
       </header>
 
       <section className="hero">

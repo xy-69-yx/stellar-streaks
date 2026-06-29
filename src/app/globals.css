@@ -104,6 +104,34 @@ dd {
   backdrop-filter: blur(14px);
 }
 
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.topbar__wallet-meta {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  text-align: right;
+}
+
+.topbar__wallet-meta span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.topbar__wallet-meta strong {
+  min-width: 0;
+  color: var(--text);
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -235,6 +263,10 @@ dd {
 .primary-button:hover,
 .secondary-button:hover {
   transform: translateY(-1px);
+}
+
+.topbar__wallet-button {
+  white-space: nowrap;
 }
 
 .hero__stats,
@@ -478,6 +510,16 @@ dd {
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .topbar__actions {
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+  }
+
+  .topbar__wallet-meta {
+    text-align: left;
+  }
 }
 
 @media (max-width: 640px) {
@@ -515,6 +557,15 @@ dd {
 
   .brand {
     min-width: 0;
+  }
+
+  .topbar__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .topbar__wallet-meta {
+    text-align: left;
   }
 
   .brand span,
